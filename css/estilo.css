@@ -1,0 +1,316 @@
+        /*importando fonte do google fontes*/
+        
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap');
+         :root {
+            --cor-azul-medio: #44B0D4;
+            --cor-cinza-claro: #c9c9c9;
+            --cor-verde-claro: #4EF594;
+            --cor-vermelho: #FF0000;
+            --cor-verde-marinho: #57EBE8;
+            --cor-azul-escuro: #1A80A2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans';
+        }
+        
+        .d-flex {
+            display: flex;
+        }
+        
+        .d-none {
+            display: none;
+        }
+        
+        body {
+            background: #E5E5E5;
+        }
+        
+        header {
+            width: 100%;
+            height: 70px;
+            background: var(--cor-azul-medio);
+            display: flex;
+            align-items: center;
+        }
+        
+        header h1 {
+            color: #FFFFFF;
+            height: min-content;
+            margin: 0 2rem;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 37px;
+            width: max-content;
+        }
+        
+        #window-new-task {
+            width: 1240px;
+            height: 683px;
+            background: #FFFFFF;
+            border-radius: 20px;
+            margin-top: -2.3rem;
+            padding: 1rem;
+            margin-left: 6rem;
+        }
+        
+        .add-task,
+        .delete-task {
+            border: none;
+            background: none;
+            margin: 63px 0 0 53px;
+        }
+        
+        #btn-add-or-delete-task {
+            cursor: pointer;
+        }
+        
+        #p-warning-no-task {
+            margin: 0 auto;
+            width: 35vw;
+            margin-top: 235px;
+            padding-bottom: 42px;
+            border-bottom: 4px solid var(--cor-cinza-claro);
+        }
+        
+        p#p-warning-no-task {
+            text-align: center;
+            font-size: 37px;
+            font-weight: 500;
+            color: var(--cor-cinza-claro);
+        }
+        /* Estilos da janela onde esta adicionando e salvando nova tarefa*/
+        
+        #content-windows-task {
+            justify-content: space-between;
+        }
+        
+        #close-add-task {
+            transform: rotate(45deg);
+        }
+        
+        #window-new-task input#title-task {
+            font-weight: 600;
+            font-size: 37px;
+            color: var(--cor-cinza-claro);
+            padding-left: 3rem;
+            width: auto;
+            max-width: 60%;
+            margin-bottom: 4rem;
+            border: none;
+        }
+        
+        #window-new-task div#task {
+            background-color: var(--cor-verde-claro);
+            width: 624px;
+            height: 400px;
+        }
+        
+        #window-new-task div#added-tasks {
+            margin-top: -7.9rem;
+            background-color: var(--cor-azul-medio);
+            width: 426px;
+            height: 525px;
+        }
+        /*estilos textuais*/
+        
+        #task form {
+            justify-self: center;
+            margin: 0 auto;
+            width: 90%;
+            height: 100%;
+        }
+        
+        #task input#title-topic {
+            font-weight: 300;
+            background: none;
+            border: none;
+            justify-self: center;
+            margin: 0 auto;
+            font-size: 24px;
+            text-align: center;
+            color: #000000;
+            padding-top: 1rem;
+            display: block;
+        }
+        
+        #task #description-task {
+            font-weight: 300;
+            font-size: 20px;
+            text-align: center;
+            color: #000000;
+            padding-top: 1rem;
+            height: 80%;
+            width: 100%;
+            background: none;
+        }
+        
+        #added-tasks {
+            padding: 3rem;
+        }
+        
+        #added-tasks ul li {
+            color: white;
+        }
+        
+        #action-buttons {
+            justify-content: flex-end;
+            margin: 1rem 0;
+            padding: 0 5rem;
+        }
+        
+        #btn-add-topic {
+            width: 143px;
+            height: 40px;
+            background: var(--cor-azul-medio);
+            border-radius: 10px;
+            border: none;
+            margin-right: 1rem;
+            font-weight: 600;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        #btn-save-task {
+            font-size: 24px;
+            color: var(--cor-verde-claro);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        /**expended topic**************************/
+        
+        #expended-topic {
+            height: 450px;
+            min-width: 90vw;
+            background: var(--cor-azul-medio);
+            margin: 9rem 0 0 -9.5%;
+            padding: 2rem;
+            color: white;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        
+        #expended-topic h3 {
+            font-weight: bold;
+            font-size: 36px;
+            margin-bottom: 75px;
+        }
+        
+        #expended-topic p {
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        #expended-topic button {
+            background: var(--cor-vermelho);
+            border: none;
+            border-radius: 10px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 25px;
+            color: white;
+            width: min-content;
+            padding: .2rem 1.5rem;
+            transition: all .3s;
+            cursor: pointer;
+        }
+        
+        #expended-topic button:hover {
+            background: none;
+            color: var(--cor-vermelho);
+        }
+        /*cards of the task*/
+        
+        .classe-card-task {
+            width: 429px;
+            height: 587px;
+            background: var(--cor-verde-marinho);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            margin: 5rem 2rem;
+        }
+        
+        .title-card-task {
+            background-color: white;
+            border-radius: 10px 10px 0px 0px;
+            height: 80px;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .title-card-task h3 {
+            color: var(--cor-verde-claro);
+            font-weight: bold;
+            font-size: 37px;
+        }
+        
+        .title-card-task span {
+            color: var(--cor-azul-medio);
+            font-weight: bold;
+            font-size: 37px;
+        }
+        /*lista não ordenada*/
+        
+        .classe-card-task ul {
+            margin: 2rem;
+            color: var(--cor-azul-escuro);
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        /*div open task, tarefas abertas*/
+        
+        .classe-open-task {
+            height: 587px;
+            background: white;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            margin: 3rem 0;
+        }
+        
+        .classe-open-task h3 {
+            font-weight: bold;
+            font-size: 37px;
+            color: var(--cor-verde-claro)
+        }
+        
+        .title-open-task {
+            padding: 1rem 3rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .classe-topic-name {
+            padding: 1rem 3rem;
+            justify-content: space-between;
+            background: var(--cor-verde-claro);
+        }
+        
+        .classe-topic-name span {
+            font-weight: normal;
+            font-size: 24px;
+            color: var(--cor-azul-escuro)
+        }
+        
+        .classe-topic-name button {
+            width: 200px;
+            height: 43px;
+            background: #FFFFFF;
+            border-radius: 64px;
+            border: none;
+            font-weight: bold;
+            font-size: 24px;
+            color: var(--cor-verde-claro);
+            cursor: pointer;
+        }
+        
+        .classe-open-task p {
+            font-weight: normal;
+            font-size: 24px;
+            color: var(--cor-azul-escuro);
+        }

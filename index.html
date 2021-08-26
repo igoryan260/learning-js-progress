@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Progress - Home</title>
+
+
+    <!-- Estilo css-->
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+
+<body>
+    <header>
+        <h1>Task Progress</h1>
+    </header>
+
+    <!-- Neste button, após ser clicado, ele irá alterar o ícone em seu interior para um 'X' e logo após abrirá uma janela para adicionar as tarefas. E também irá alterar a classe -->
+    <button id="btn-add-or-delete-task" onclick="abrirJanelaAddTask()" class="add-task">
+        <img id="image-add-or-delete-task" src="./image/plus.png">
+    </button>
+
+    <div id="content-principal">
+        <!-- Este parágrafo abaixo irá desaparecer caso uma tarefa for adicionada-->
+        <p id="p-warning-no-task" class="">
+            Você ainda não<br /> possui nenhuma tarefa!
+        </p>
+
+        <!-- os códigos abaixo estão sendo ralacionados à janela de inclusão de tarefas-->
+        <!-- **************************************************************-->
+        <div id="window-new-task" class="d-none">
+            <input type="text" id="title-task" placeholder="Title">
+            <div id="content-windows-task" class="d-flex">
+                <div id="task">
+                    <form>
+                        <input type="text" id="title-topic" placeholder="Title of the topic">
+                        <textarea id="description-task"></textarea>
+                    </form>
+                </div>
+                <!-- Container azul, one tem uma lista de topicos relacionados à tarefa-->
+                <div id="added-tasks">
+                    <ul>
+                        <li style="cursor: pointer;" id="added-topic-title" onclick="abrirExpendedTopic()">Topic One</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="action-buttons" class="d-flex">
+                <button id="btn-add-topic">Add Topic</button>
+                <button id="btn-save-task">Save task</button>
+            </div>
+            <!-- 
+            <div id="expended-topic" class="classe-expended-topic d-flex">
+                <h3>Topic One</h3>
+                <p>Description...</p>
+                <button type="button" id="close-expended-topic">Close</button>
+            </div>
+        -->
+        </div>
+
+        <!-- Cards clicáveis para abrir as tarefas salvas e o progresso delas-->
+        <div class="classe-card-task d-none">
+            <div class="title-card-task d-flex">
+                <h3>Task(Title)</h3>
+                <span>30%</span>
+            </div>
+            <ul>
+                <li> Topic One... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></li>
+
+                <li> Topic Two... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></li>
+            </ul>
+        </div>
+
+        <!-- Tarefa aberta e descrição dela, isso para que o usuário clique em topicos concluídos até concluir todos eles-->
+        <div class="classe-open-task d-none">
+            <div class="title-open-task d-flex">
+                <h3 id="title-task">Task(Title)</h3>
+                <span>COMPLETE</span>
+            </div>
+            <div class="classe-topic-name d-flex">
+                <span>Topic</span>
+                <button class="btn-conclude-topic">Conclude</button>
+            </div>
+            <p>
+                Description
+            </p>
+        </div>
+    </div>
+
+
+    <!-- javascript-->
+    <script src="./js/script-index.js"></script>
+
+</body>
+
+</html>
