@@ -32,16 +32,62 @@ function abrirJanelaAddTask() {
     }
 }
 
+
+/*criando array para armazenar os valores inseridos pelo usuário no titulo da tarefa e na descrição também,*/
+
+var topicosInseridosTitulo = Array()
+var topicosInseridosDescricao = Array()
+
+/*contador para passar pelos indices do array*/
+var passandoPeloArray = 0
+
+function inserindoTopicosArray() {
+    topicosInseridosTitulo.push(document.getElementById("title-topic").value)
+    console.log(topicosInseridosTitulo)
+
+    /*chamando a funcao adicionarTituloNaLista*/
+    adicionarTituloNaLista(passandoPeloArray)
+
+    /*adicionar os titulos que estão armazenados no array, e inserir na lista não ordenada na parte lateral direita azul*/
+    function adicionarTituloNaLista(indiceArray) {
+
+        var itemArrayTitulo = document.createElement("li")
+        itemArrayTitulo.style = "cursor: pointer;"
+        itemArrayTitulo.id = "titulo-" + indiceArray + ""
+        itemArrayTitulo.onclick = quandoClicar
+        itemArrayTitulo.innerHTML = topicosInseridosTitulo[indiceArray]
+
+        document.getElementById("list-added-tasks").appendChild(itemArrayTitulo)
+    }
+    passandoPeloArray++
+
+
+    /***************************************************************************************** ======================================================================================*/
+
+
+    /*a função abaixo irá repetir o mesmo processo, mas irá adicionar a descrição no ArrayDescricao*/
+    /* mas não irá colocar na divisão azul */
+    topicosInseridosDescricao.push(document.getElementById("description-task").value)
+
+    /*debug*/
+    console.log(topicosInseridosDescricao)
+
+    /*limpar os valores preenchidos nos inputs*/
+    document.getElementById("title-topic").value = ""
+    document.getElementById("description-task").value = ""
+}
+
+
 /*função para abrir uma div contendo os conteúdos relacionado à tarefa,
 exemplo: cliquei no topico tal, abrirá uma div com titulo e descrição em baixo*/
 
-function abrirExpendedTopic() {
+function abrirExpendedTopic(indiceTitulo) {
     /*esete código vai procurar o elemento com o id 'expended-topi' e vai excluir, caso não exista ele irá adicionar uma nova div*/
     if (document.getElementById("expended-topic")) {
         document.getElementById("expended-topic").remove()
     }
 
-    var tituloDoTopico = document.getElementById("title-topic").value
+    var tituloDoTopico = topicosInseridosTitulo[indiceArray]
     var descricaoDoTopico = document.getElementById("description-task").value
 
     /*criando a div automaticamente*/
@@ -57,14 +103,6 @@ function abrirExpendedTopic() {
 
     document.getElementById("window-new-task").appendChild(divExpendedTopic)
 
-
-
-    /*limpar os valores preenchidos nos inputs*/
-
-    document.getElementById("title-topic").value = ""
-    document.getElementById("description-task").value = ""
-
-
-
+    /*debugando*/
     console.log("Estou chegando até aqui")
 }
