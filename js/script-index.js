@@ -41,6 +41,7 @@ var topicosInseridosDescricao = Array()
 /*contador para passar pelos indices do array*/
 var passandoPeloArray = 0
 
+
 function inserindoTopicosArray() {
     topicosInseridosTitulo.push(document.getElementById("title-topic").value)
     console.log(topicosInseridosTitulo)
@@ -54,10 +55,15 @@ function inserindoTopicosArray() {
         var itemArrayTitulo = document.createElement("li")
         itemArrayTitulo.style = "cursor: pointer;"
         itemArrayTitulo.id = "titulo-" + indiceArray + ""
-        itemArrayTitulo.onclick = quandoClicar
+
         itemArrayTitulo.innerHTML = topicosInseridosTitulo[indiceArray]
 
         document.getElementById("list-added-tasks").appendChild(itemArrayTitulo)
+
+        /*quando o objeto da lista for clicado, irá executar a função que abrirá a funcao abrirExpendedTopic*/
+        itemArrayTitulo.addEventListener("click", function() {
+            abrirExpendedTopic(indiceArray)
+        })
     }
     passandoPeloArray++
 
@@ -81,14 +87,14 @@ function inserindoTopicosArray() {
 /*função para abrir uma div contendo os conteúdos relacionado à tarefa,
 exemplo: cliquei no topico tal, abrirá uma div com titulo e descrição em baixo*/
 
-function abrirExpendedTopic(indiceTitulo) {
+function abrirExpendedTopic(indiceArray) {
     /*esete código vai procurar o elemento com o id 'expended-topi' e vai excluir, caso não exista ele irá adicionar uma nova div*/
     if (document.getElementById("expended-topic")) {
         document.getElementById("expended-topic").remove()
     }
 
     var tituloDoTopico = topicosInseridosTitulo[indiceArray]
-    var descricaoDoTopico = document.getElementById("description-task").value
+    var descricaoDoTopico = topicosInseridosDescricao[indiceArray]
 
     /*criando a div automaticamente*/
 
@@ -97,12 +103,35 @@ function abrirExpendedTopic(indiceTitulo) {
     divExpendedTopic.id = "expended-topic"
     divExpendedTopic.className = "classe-expended-topic d-flex"
 
-    var conteudoDaDiv = "<h3>" + tituloDoTopico + "</h3><p>" + descricaoDoTopico + "</p><button type='button' id='close-expended-topic'>Close</button>"
+    var conteudoDaDiv = "<h3>" + tituloDoTopico + "</h3><p>" + descricaoDoTopico + "</p><button type='button' onclick='closeExpendedTopic()'>Close</button>"
 
     divExpendedTopic.innerHTML = conteudoDaDiv
 
     document.getElementById("window-new-task").appendChild(divExpendedTopic)
 
     /*debugando*/
-    console.log("Estou chegando até aqui")
+    console.log(indiceArray)
+}
+
+/*a função criada abaixo, simplesmente terá que excluir o 'expendedtopic' que foi criado dinamicamente com outra função*/
+
+function closeExpendedTopic() {
+    document.getElementById("expended-topic").remove()
+}
+
+/*a partir dos topicos serem inseridos em seus arrays, agora é preciso adicionar o titulo da tarefa em um array somente com estas tarefas*/
+var arrayTask = Array()
+var itemTarefa = 0
+
+function saveTask() {
+
+    console.log(itemTarefa)
+    var tituloTarefa = document.getElementById("title-task").value
+
+    arrayTask.push(Array("tarefa-" + itemTarefa + "", tituloTarefa, topicosInseridosTitulo, topicosInseridosDescricao))
+
+    //incrementando a variavel que adicionará um identificador no array
+    itemTarefa++
+    console.log(arrayTask)
+
 }
