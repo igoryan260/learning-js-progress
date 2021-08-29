@@ -14,7 +14,7 @@
 function abrirJanelaAddTask() {
     var btn_add_delete_task = document.getElementById("btn-add-or-delete-task").className
 
-    console.log(btn_add_delete_task)
+    //console.log(btn_add_delete_task)
     if (btn_add_delete_task === "add-task") {
 
         document.getElementById("btn-add-or-delete-task").className = "delete-task"
@@ -44,7 +44,7 @@ var passandoPeloArray = 0
 
 function inserindoTopicosArray() {
     topicosInseridosTitulo.push(document.getElementById("title-topic").value)
-    console.log(topicosInseridosTitulo)
+        // console.log(topicosInseridosTitulo)
 
     /*chamando a funcao adicionarTituloNaLista*/
     adicionarTituloNaLista(passandoPeloArray)
@@ -76,7 +76,7 @@ function inserindoTopicosArray() {
     topicosInseridosDescricao.push(document.getElementById("description-task").value)
 
     /*debug*/
-    console.log(topicosInseridosDescricao)
+    //console.log(topicosInseridosDescricao)
 
     /*limpar os valores preenchidos nos inputs*/
     document.getElementById("title-topic").value = ""
@@ -110,7 +110,7 @@ function abrirExpendedTopic(indiceArray) {
     document.getElementById("window-new-task").appendChild(divExpendedTopic)
 
     /*debugando*/
-    console.log(indiceArray)
+    //console.log(indiceArray)
 }
 
 /*a função criada abaixo, simplesmente terá que excluir o 'expendedtopic' que foi criado dinamicamente com outra função*/
@@ -121,17 +121,44 @@ function closeExpendedTopic() {
 
 /*a partir dos topicos serem inseridos em seus arrays, agora é preciso adicionar o titulo da tarefa em um array somente com estas tarefas*/
 var arrayTask = Array()
+
 var itemTarefa = 0
 
 function saveTask() {
 
-    console.log(itemTarefa)
+    //apagando o array existente para não repetí-lo duas ou mais vezes
+    var tamanhoArray = topicosInseridosTitulo.length
+        //esta única variável acima ja é suficiente para limpar array dos titulos e da descrição
+    console.log(tamanhoArray)
+    if (tamanhoArray > 2) {
+
+        topicosInseridosTitulo.forEach(function() {
+            topicosInseridosTitulo.shift(topicosInseridosTitulo[tamanhoArray])
+            topicosInseridosDescricao.shift(topicosInseridosDescricao[tamanhoArray])
+        });
+        console.log(tamanhoArray)
+    }
+
+
     var tituloTarefa = document.getElementById("title-task").value
 
-    arrayTask.push(Array("tarefa-" + itemTarefa + "", tituloTarefa, topicosInseridosTitulo, topicosInseridosDescricao))
+    arrayTask.push(arrayTask["id_task"] = "tarefa-" + itemTarefa + "", arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-topico"] = topicosInseridosTitulo, arrayTask["descricao-topico"] = topicosInseridosDescricao)
 
-    //incrementando a variavel que adicionará um identificador no array
+    //com este código de criação do array tarefa, ele cria 5 indices numericos, repete o titulo da tarefa e depois cria mais 4 índices textuais com os mesmos valores, a função abaixo serve para excluir os índices numéricos no inicio do arrayTask
+    for (let x = 0; x < 6; x++) {
+        arrayTask.shift(arrayTask[x])
+            //com este "for" excluimos os valores repetidos e com indices numéricos
+    }
+
+    //incrementando a variavel que adicionará um identificador no arrayTask
     itemTarefa++
     console.log(arrayTask)
+
+    /*para cada tarefa salva, é preciso excluir o array de titulos de topicos e descricoes, além de apagar o input 
+    de titulo de tarefa*/
+    document.getElementById("title-task").value = ""
+
+    //apagando os itens da lista lateral direito azul existente
+    document.getElementById("list-added-tasks").innerHTML = ""
 
 }
