@@ -1,16 +1,10 @@
 //primeira função JS é:
 /* após clicar no botão  "PLUS", deverá: 
-
 - abrir uma janela onde o usuário poderá inlcuir uma nova tarefa
-
 - excluir o aviso 'warning' de que não existe tarefa nenhuma
-
 - trocar o ícone de add task ou delete task
-
 -adicionar um valor booleano para detectar cliques simultânios, para sempre inverter valores das classes e imagens do ícone
 */
-
-
 function abrirJanelaAddTask() {
     var btn_add_delete_task = document.getElementById("btn-add-or-delete-task").className
 
@@ -26,7 +20,6 @@ function abrirJanelaAddTask() {
 
         document.getElementById("btn-add-or-delete-task").className = "add-task"
         document.getElementById("image-add-or-delete-task").src = "./image/plus.png"
-        document.getElementById("p-warning-no-task").className = ""
         document.getElementById("window-new-task").className = "d-none"
 
     }
@@ -66,7 +59,7 @@ function inserindoTopicosArray() {
         })
     }
     passandoPeloArray++
-
+    console.log("passando no array: " + passandoPeloArray)
 
     /***************************************************************************************** ======================================================================================*/
 
@@ -121,28 +114,24 @@ function closeExpendedTopic() {
 
 /*a partir dos topicos serem inseridos em seus arrays, agora é preciso adicionar o titulo da tarefa em um array somente com estas tarefas*/
 var arrayTask = Array()
-
 var itemTarefa = 0
 
 function saveTask() {
 
-    //apagando o array existente para não repetí-lo duas ou mais vezes
-    var tamanhoArray = topicosInseridosTitulo.length
-        //esta única variável acima ja é suficiente para limpar array dos titulos e da descrição
-    console.log(tamanhoArray)
-    if (tamanhoArray > 2) {
-
-        topicosInseridosTitulo.forEach(function() {
-            topicosInseridosTitulo.shift(topicosInseridosTitulo[tamanhoArray])
-            topicosInseridosDescricao.shift(topicosInseridosDescricao[tamanhoArray])
-        });
-        console.log(tamanhoArray)
-    }
-
-
     var tituloTarefa = document.getElementById("title-task").value
+        //estes arrays abaixo foram criados dentro da function para que o valor deles não sejam apagados com a 'function limparArrayList'
+    var tituloTopico = Array()
+    var descricaoTopico = Array()
 
-    arrayTask.push(arrayTask["id_task"] = "tarefa-" + itemTarefa + "", arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-topico"] = topicosInseridosTitulo, arrayTask["descricao-topico"] = topicosInseridosDescricao)
+    for (let index = 0; index < topicosInseridosTitulo.length; index++) {
+        tituloTopico.push(topicosInseridosTitulo[index])
+        descricaoTopico.push(topicosInseridosDescricao[index])
+    }
+    /*
+        console.log(tituloTopico)
+        console.log(descricaoTopico)
+    */
+    arrayTask.push(arrayTask["id_task"] = itemTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-topico"] = tituloTopico, arrayTask["descricao-topico"] = descricaoTopico)
 
     //com este código de criação do array tarefa, ele cria 5 indices numericos, repete o titulo da tarefa e depois cria mais 4 índices textuais com os mesmos valores, a função abaixo serve para excluir os índices numéricos no inicio do arrayTask
     for (let x = 0; x < 6; x++) {
@@ -152,7 +141,7 @@ function saveTask() {
 
     //incrementando a variavel que adicionará um identificador no arrayTask
     itemTarefa++
-    console.log(arrayTask)
+    // console.log(arrayTask)
 
     /*para cada tarefa salva, é preciso excluir o array de titulos de topicos e descricoes, além de apagar o input 
     de titulo de tarefa*/
@@ -160,5 +149,74 @@ function saveTask() {
 
     //apagando os itens da lista lateral direito azul existente
     document.getElementById("list-added-tasks").innerHTML = ""
+    limparArrayList()
+
+    //criando card na tela inicial
+    criarCardTask()
+
+}
+
+//limpando array dos items na lista, para não repeti-los em outras tarefas 
+function limparArrayList() {
+
+    //apagando o array existente para não repetí-lo duas ou mais vezes
+    var tamanhoArray = topicosInseridosTitulo.length
+        //esta única variável acima ja é suficiente para limpar array dos titulos e da descrição
+
+    console.log(tamanhoArray)
+    console.log(topicosInseridosTitulo)
+
+    if (tamanhoArray > 0) {
+
+        for (let indice = 0; indice < tamanhoArray; indice++) {
+            topicosInseridosTitulo.shift(topicosInseridosTitulo[indice])
+            topicosInseridosDescricao.shift(topicosInseridosDescricao[indice])
+        }
+        //esta variável abaixo serve para reiniciar a contagem do zero para pegar os indices corretos do arrayLista. Assim foi corrigido o bug de 'indefined'
+        passandoPeloArray = 0
+
+
+    }
+    console.log("passando no array depois do save: " + passandoPeloArray)
+    console.log(topicosInseridosTitulo)
+}
+
+function criarCardTask() {
+
+
+    console.log(arrayTask)
+
+    //tirar aviso de tarefa inexistente
+    document.getElementById("p-warning-no-task").className = "d-none"
+    abrirJanelaAddTask()
+
+    //encontrar o id da div que comporta os cards e criar os elementos com id's diferentes
+    var cardObject = document.createElement("div")
+    cardObject.className = "classe-card-task card"
+    cardObject.id = "card" + arrayTask['id_task']
+    document.getElementById("containerCards").appendChild(cardObject)
+
+    //criando elementos dentro dos cards 
+    var divTitleTask = document.createElement("div")
+    divTitleTask.className = "title-card-task d-flex"
+    divTitleTask.innerHTML = "<h3>" + arrayTask['titulo-tarefa'] + "</h3><span>30%</span>"
+
+    document.getElementById("card" + arrayTask['id_task']).appendChild(divTitleTask)
+
+    //criação da lista para trabalhar a lógica de criação de listas dos tópicos
+
+    var listaTopicos = document.createElement("ul")
+    listaTopicos.id = "lista" + arrayTask['id_task']
+    document.getElementById("card" + arrayTask['id_task']).appendChild(listaTopicos)
+
+    var itensLista
+
+    arrayTask['titulo-topico'].forEach(function() {
+        listaTopicos.innerHTML = "<li>" + arrayTask['titulo-topico'] + "</li>"
+    });
+
+    document.getElementById("card" + arrayTask['id_task']).appendChild(itensLista)
+
+
 
 }
