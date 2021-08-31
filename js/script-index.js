@@ -196,6 +196,8 @@ function criarCardTask() {
     cardObject.id = "card" + arrayTask['id_task']
     document.getElementById("containerCards").appendChild(cardObject)
 
+
+
     //criando elementos dentro dos cards 
     var divTitleTask = document.createElement("div")
     divTitleTask.className = "title-card-task d-flex"
@@ -209,14 +211,14 @@ function criarCardTask() {
     listaTopicos.id = "lista" + arrayTask['id_task']
     document.getElementById("card" + arrayTask['id_task']).appendChild(listaTopicos)
 
-    var itensLista
 
-    arrayTask['titulo-topico'].forEach(function() {
-        listaTopicos.innerHTML = "<li>" + arrayTask['titulo-topico'] + "</li>"
-    });
-
-    document.getElementById("card" + arrayTask['id_task']).appendChild(itensLista)
-
+    //para cada elemento do array, criar um elemento li com a informação correspondente ao índice do array task [titulo-topico]
+    for (let indiceLista = 0; indiceLista < arrayTask['titulo-topico'].length; indiceLista++) {
+        var itensLista
+        itensLista = document.createElement("li")
+        itensLista.innerHTML = arrayTask['titulo-topico'][indiceLista]
+        document.getElementById("lista" + arrayTask['id_task']).appendChild(itensLista)
+    }
 
 
 }
