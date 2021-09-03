@@ -24,7 +24,7 @@
 
     <div id="content-principal">
         <!-- Este parágrafo abaixo irá desaparecer caso uma tarefa for adicionada-->
-        <p id="p-warning-no-task" class="">
+        <p id="p-warning-no-task" class="d-none">
             Você ainda não<br /> possui nenhuma tarefa!
         </p>
 
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Cards clicáveis para abrir as tarefas salvas e o progresso delas-->
-        <div id="containerCards" class=" d-flex">
+        <div id="containerCards" class="d-flex">
             <!-- 
             <div class="classe-card-task card">                
                 <div class="title-card-task d-flex">
@@ -82,14 +82,17 @@
 
         <!-- Tarefa aberta e descrição dela, isso para que o usuário clique em topicos concluídos até concluir todos eles-->
         <div class="classe-open-task d-none">
+
             <div class="title-open-task d-flex">
-                <h3 id="title-task">Task(Title)</h3>
+                <h3>Task(Title)</h3>
                 <span>COMPLETE</span>
             </div>
+
             <div class="classe-topic-name d-flex">
                 <span>Topic</span>
                 <button class="btn-conclude-topic">Conclude</button>
             </div>
+
             <p>
                 Description
             </p>

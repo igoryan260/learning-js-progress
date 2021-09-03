@@ -131,13 +131,15 @@ function saveTask() {
         console.log(tituloTopico)
         console.log(descricaoTopico)
     */
-    arrayTask.push(arrayTask["id_task"] = itemTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-topico"] = tituloTopico, arrayTask["descricao-topico"] = descricaoTopico)
+    //arrayTask.push(arrayTask["id_task"] = itemTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-topico"] = tituloTopico, arrayTask["descricao-topico"] = descricaoTopico)
+    //reformulando código
+    arrayTask.push(Array(itemTarefa, tituloTarefa, tituloTopico, descricaoTopico))
 
     //com este código de criação do array tarefa, ele cria 5 indices numericos, repete o titulo da tarefa e depois cria mais 4 índices textuais com os mesmos valores, a função abaixo serve para excluir os índices numéricos no inicio do arrayTask
-    for (let x = 0; x < 6; x++) {
-        arrayTask.shift(arrayTask[x])
-            //com este "for" excluimos os valores repetidos e com indices numéricos
-    }
+    /* for (let x = 0; x < 6; x++) {
+         arrayTask.shift(arrayTask[x])
+             //com este "for" excluimos os valores repetidos e com indices numéricos
+     }*/
 
     //incrementando a variavel que adicionará um identificador no arrayTask
     itemTarefa++
@@ -154,6 +156,17 @@ function saveTask() {
     //criando card na tela inicial
     criarCardTask()
 
+    //tirar aviso de tarefa inexistente
+    document.getElementById("p-warning-no-task").className = "d-none"
+        //fechar janela onde adiciona tarefas
+    abrirJanelaAddTask()
+
+    //debugando   
+    debug()
+}
+
+function debug() {
+    console.log(arrayTask)
 }
 
 //limpando array dos items na lista, para não repeti-los em outras tarefas 
@@ -182,18 +195,18 @@ function limparArrayList() {
 }
 
 function criarCardTask() {
-
-
-    console.log(arrayTask)
-
-    //tirar aviso de tarefa inexistente
-    document.getElementById("p-warning-no-task").className = "d-none"
-    abrirJanelaAddTask()
+    let indiceTarefa
+    reduzirValorItemTarefa()
+        //tranformar um valor da variavel, para que ela possa ser reutilizada porém com uma unidade a menos
+    function reduzirValorItemTarefa() {
+        indiceTarefa = itemTarefa - 1
+        return indiceTarefa
+    }
 
     //encontrar o id da div que comporta os cards e criar os elementos com id's diferentes
     var cardObject = document.createElement("div")
     cardObject.className = "classe-card-task card"
-    cardObject.id = "card" + arrayTask['id_task']
+    cardObject.id = "card" + indiceTarefa
     document.getElementById("containerCards").appendChild(cardObject)
 
 
@@ -201,24 +214,40 @@ function criarCardTask() {
     //criando elementos dentro dos cards 
     var divTitleTask = document.createElement("div")
     divTitleTask.className = "title-card-task d-flex"
-    divTitleTask.innerHTML = "<h3>" + arrayTask['titulo-tarefa'] + "</h3><span>30%</span>"
+    divTitleTask.innerHTML = "<h3>" + arrayTask[indiceTarefa][1] + "</h3><span>30%</span>"
 
-    document.getElementById("card" + arrayTask['id_task']).appendChild(divTitleTask)
+    document.getElementById("card" + indiceTarefa).appendChild(divTitleTask)
 
     //criação da lista para trabalhar a lógica de criação de listas dos tópicos
 
     var listaTopicos = document.createElement("ul")
-    listaTopicos.id = "lista" + arrayTask['id_task']
-    document.getElementById("card" + arrayTask['id_task']).appendChild(listaTopicos)
+    listaTopicos.id = "lista" + indiceTarefa
+    document.getElementById("card" + indiceTarefa).appendChild(listaTopicos)
 
 
     //para cada elemento do array, criar um elemento li com a informação correspondente ao índice do array task [titulo-topico]
-    for (let indiceLista = 0; indiceLista < arrayTask['titulo-topico'].length; indiceLista++) {
+    for (let indiceLista = 0; indiceLista < arrayTask[indiceTarefa][2].length; indiceLista++) {
         var itensLista
         itensLista = document.createElement("li")
-        itensLista.innerHTML = arrayTask['titulo-topico'][indiceLista]
-        document.getElementById("lista" + arrayTask['id_task']).appendChild(itensLista)
+        itensLista.innerHTML = arrayTask[indiceTarefa][2][indiceLista]
+        document.getElementById("lista" + indiceTarefa).appendChild(itensLista)
     }
+
+    //criando uma function para abrir a tarefa e seus tópicos em um outro card
+    cardObject.addEventListener("click", function() {
+        var identificadorTarefa = parseInt(cardObject.id.substring(4, 5))
+        console.log(arrayTask)
+    })
 
 
 }
+
+/*function abrirTarefa(tituloTarefa, topicoTarefa, descricaoTarefa) {
+    var divTituloProgresso = document.createElement("div")
+    divTituloProgresso.className = "title-open-task d-flex"
+
+    //debugando codigo
+    console.log(topicosTarefa)
+
+    divTituloProgresso.innerHTML = "<h3>Task(Title)</h3><span>COMPLETE</span>"
+}*/
