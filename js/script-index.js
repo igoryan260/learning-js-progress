@@ -127,23 +127,12 @@ function saveTask() {
         tituloTopico.push(topicosInseridosTitulo[index])
         descricaoTopico.push(topicosInseridosDescricao[index])
     }
-    /*
-        console.log(tituloTopico)
-        console.log(descricaoTopico)
-    */
-    //arrayTask.push(arrayTask["id_task"] = itemTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-tarefa"] = tituloTarefa, arrayTask["titulo-topico"] = tituloTopico, arrayTask["descricao-topico"] = descricaoTopico)
-    //reformulando código
-    arrayTask.push(Array(itemTarefa, tituloTarefa, tituloTopico, descricaoTopico))
 
-    //com este código de criação do array tarefa, ele cria 5 indices numericos, repete o titulo da tarefa e depois cria mais 4 índices textuais com os mesmos valores, a função abaixo serve para excluir os índices numéricos no inicio do arrayTask
-    /* for (let x = 0; x < 6; x++) {
-         arrayTask.shift(arrayTask[x])
-             //com este "for" excluimos os valores repetidos e com indices numéricos
-     }*/
+    arrayTask.push(Array(itemTarefa, tituloTarefa, tituloTopico, descricaoTopico))
 
     //incrementando a variavel que adicionará um identificador no arrayTask
     itemTarefa++
-    // console.log(arrayTask)
+
 
     /*para cada tarefa salva, é preciso excluir o array de titulos de topicos e descricoes, além de apagar o input 
     de titulo de tarefa*/
@@ -161,13 +150,10 @@ function saveTask() {
         //fechar janela onde adiciona tarefas
     abrirJanelaAddTask()
 
-    //debugando   
-    debug()
-}
-
-function debug() {
     console.log(arrayTask)
 }
+
+
 
 //limpando array dos items na lista, para não repeti-los em outras tarefas 
 function limparArrayList() {
@@ -176,22 +162,14 @@ function limparArrayList() {
     var tamanhoArray = topicosInseridosTitulo.length
         //esta única variável acima ja é suficiente para limpar array dos titulos e da descrição
 
-    console.log(tamanhoArray)
-    console.log(topicosInseridosTitulo)
-
     if (tamanhoArray > 0) {
-
         for (let indice = 0; indice < tamanhoArray; indice++) {
             topicosInseridosTitulo.shift(topicosInseridosTitulo[indice])
             topicosInseridosDescricao.shift(topicosInseridosDescricao[indice])
         }
         //esta variável abaixo serve para reiniciar a contagem do zero para pegar os indices corretos do arrayLista. Assim foi corrigido o bug de 'indefined'
         passandoPeloArray = 0
-
-
     }
-    console.log("passando no array depois do save: " + passandoPeloArray)
-    console.log(topicosInseridosTitulo)
 }
 
 function criarCardTask() {
@@ -236,13 +214,20 @@ function criarCardTask() {
     //criando uma function para abrir a tarefa e seus tópicos em um outro card
     cardObject.addEventListener("click", function() {
         var identificadorTarefa = parseInt(cardObject.id.substring(4, 5))
-        console.log(arrayTask)
+
+        const tituloTarefa = arrayTask.filter(function(elem, index, arr) {
+            return index == identificadorTarefa
+        })
+
+        console.log(identificadorTarefa)
+
+        console.log(tituloTarefa[0][1])
     })
 
 
 }
 
-/*function abrirTarefa(tituloTarefa, topicoTarefa, descricaoTarefa) {
+function abrirTarefa(tituloTarefa, topicoTarefa, descricaoTarefa) {
     var divTituloProgresso = document.createElement("div")
     divTituloProgresso.className = "title-open-task d-flex"
 
@@ -250,4 +235,4 @@ function criarCardTask() {
     console.log(topicosTarefa)
 
     divTituloProgresso.innerHTML = "<h3>Task(Title)</h3><span>COMPLETE</span>"
-}*/
+}
