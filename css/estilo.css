@@ -206,7 +206,8 @@
             font-size: 24px;
         }
         
-        #expended-topic button {
+        #expended-topic button,
+        #closeCardsExpanded {
             background: var(--cor-vermelho);
             border: none;
             border-radius: 10px;
@@ -220,7 +221,8 @@
             cursor: pointer;
         }
         
-        #expended-topic button:hover {
+        #expended-topic button:hover,
+        #closeCardsExpanded:hover {
             background: none;
             color: var(--cor-vermelho);
         }
@@ -266,7 +268,6 @@
         /*div open task, tarefas abertas*/
         
         .classe-open-task {
-            height: 587px;
             background: white;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
@@ -277,6 +278,11 @@
             font-weight: bold;
             font-size: 37px;
             color: var(--cor-verde-claro)
+        }
+        
+        .classe-open-task p {
+            min-height: 300px;
+            text-align: center;
         }
         
         .title-open-task {
@@ -313,4 +319,9 @@
             font-weight: normal;
             font-size: 24px;
             color: var(--cor-azul-escuro);
+        }
+        /*botão para excluir os cards expandidos que é gerado automaticamente*/
+        
+        #closeCardsExpanded {
+            margin: 1rem;
         }
