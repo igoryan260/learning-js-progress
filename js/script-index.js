@@ -122,13 +122,14 @@ function saveTask() {
         //estes arrays abaixo foram criados dentro da function para que o valor deles não sejam apagados com a 'function limparArrayList'
     var tituloTopico = Array()
     var descricaoTopico = Array()
+    var tarefaConcluida = false
 
     for (let index = 0; index < topicosInseridosTitulo.length; index++) {
         tituloTopico.push(topicosInseridosTitulo[index])
         descricaoTopico.push(topicosInseridosDescricao[index])
     }
 
-    arrayTask.push(Array(itemTarefa, tituloTarefa, tituloTopico, descricaoTopico))
+    arrayTask.push(Array(tarefaConcluida, tituloTarefa, tituloTopico, descricaoTopico))
 
     //incrementando a variavel que adicionará um identificador no arrayTask
     itemTarefa++
@@ -171,6 +172,8 @@ function limparArrayList() {
         passandoPeloArray = 0
     }
 }
+
+var identificadorTarefaExpandida = 0
 
 function criarCardTask() {
     let indiceTarefa
@@ -225,7 +228,9 @@ function criarCardTask() {
         //console.log(dadosTarefa[0][2])
         //console.log(dadosTarefa[0][3])
 
-        abrirTarefa(dadosTarefa[0][1], dadosTarefa[0][2], dadosTarefa[0][3])
+        identificadorTarefaExpandida = indiceTarefa
+
+        abrirTarefa(dadosTarefa[0][0], dadosTarefa[0][1], dadosTarefa[0][2], dadosTarefa[0][3], identificadorTarefaExpandida)
             /*
                 Neste código acima, o indice 0 sempre será zero, porque se trata de um novo array, e cada clique em um card criara ou sobreescreverá o array com apenas um índice
                 isso significa que terá sempre um único indice no array. Quanto aos índices em seguida, '1' significa que é o título, '2' significa os titulos dos tópicos
@@ -236,38 +241,48 @@ function criarCardTask() {
 
 }
 
-function abrirTarefa(tituloTarefa, topicoTarefa, descricaoTarefa) {
+
+
+function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTarefa, identificadorTarefaExpandida) {
     //display none nos cards encolhidos, para aparecer somente os cards expandidos
     document.getElementById("containerCards").className = "d-none"
 
     var cardExpandido = document.getElementById("cards-expanded")
     cardExpandido.className = "classe-open-task"
 
-    var divTituloAndProgress = document.createElement("div")
-    divTituloAndProgress.id = "task-expanded"
-    divTituloAndProgress.className = "title-open-task d-flex"
-    divTituloAndProgress.innerHTML = "<h3>" + tituloTarefa + "</h3><span>COMPLETE</span>"
-    cardExpandido.appendChild(divTituloAndProgress)
+    if (!document.getElementById("task-expanded" + identificadorTarefaExpandida)) {
+        var divTituloAndProgress = document.createElement("div")
+        divTituloAndProgress.id = "task-expanded" + identificadorTarefaExpandida
+        divTituloAndProgress.className = "title-open-task d-flex"
+        divTituloAndProgress.innerHTML = "<h3>" + tituloTarefa + "</h3><span>COMPLETE</span>"
+        cardExpandido.appendChild(divTituloAndProgress)
 
 
 
-    //nome dos tópicos e criando card também
-    for (let index = 0; index < topicoTarefa.length; index++) {
+        //nome dos tópicos e criando card também
+        for (let index = 0; index < topicoTarefa.length; index++) {
 
-        var divTopicos = document.createElement("div")
-        divTopicos.id = "topicos" + index
+            var divTopicos = document.createElement("div")
+            divTopicos.id = tituloTarefa + "_topicos_" + index
 
-        var divTopicName = document.createElement("div")
-        divTopicName.className = "classe-topic-name d-flex"
-        divTopicName.innerHTML += "<span>" + topicoTarefa[index] + "</span><button class='btn-conclude-topic'>Conclude</button>"
-        divTopicos.appendChild(divTopicName)
+            var divTopicName = document.createElement("div")
+            divTopicName.className = "classe-topic-name d-flex"
+            divTopicName.innerHTML += "<span>" + topicoTarefa[index] + "</span><button class='btn-conclude-topic'>Conclude</button>"
+            divTopicos.appendChild(divTopicName)
 
-        var descriptionTopic = document.createElement("p")
-        descriptionTopic.className = "paragraph-description"
-        descriptionTopic.innerHTML += descricaoTarefa[index]
-        divTopicos.appendChild(descriptionTopic)
+            var descriptionTopic = document.createElement("p")
+            descriptionTopic.className = "paragraph-description"
+            descriptionTopic.innerHTML += descricaoTarefa[index]
+            divTopicos.appendChild(descriptionTopic)
 
-        cardExpandido.appendChild(divTopicos)
+            cardExpandido.appendChild(divTopicos)
+        }
+
+    } else {
+        document.getElementById("task-expanded" + identificadorTarefaExpandida).className = "title-open-task d-flex"
+        for (let index = 0; index < topicoTarefa.length; index++) {
+            document.getElementById(tituloTarefa + "_topicos_" + index).className = ""
+        }
     }
 
     //criando button para fechar card-expandido
@@ -276,22 +291,22 @@ function abrirTarefa(tituloTarefa, topicoTarefa, descricaoTarefa) {
     btn_close_card.innerHTML = "Close"
     cardExpandido.appendChild(btn_close_card)
     btn_close_card.addEventListener("click", function() {
-        fecharCardsExpandidos(topicoTarefa)
-    })
-
-    //debugando codigo
+            fecharCardsExpandidos(tituloTarefa, topicoTarefa, identificadorTarefaExpandida)
+        })
+        //debugando codigo
     console.log(tituloTarefa, topicoTarefa, descricaoTarefa)
 
     //divTituloProgresso.innerHTML = "<h3>Task(Title)</h3><span>COMPLETE</span>"
 }
 
-function fecharCardsExpandidos(quantidadeTopicos) {
-    document.getElementById("task-expanded").remove()
+function fecharCardsExpandidos(titulo, quantidadeTopicos, identify) {
+    document.getElementById("task-expanded" + identify).className = "d-none"
+
     document.getElementById("closeCardsExpanded").remove()
 
 
     for (let index = 0; index < quantidadeTopicos.length; index++) {
-        document.getElementById("topicos" + index).remove()
+        document.getElementById(titulo + "_topicos_" + index).className = "d-none"
     }
     document.getElementById("cards-expanded").className = "d-none"
     document.getElementById("containerCards").className = "d-flex"
