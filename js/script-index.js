@@ -25,7 +25,6 @@ function abrirJanelaAddTask() {
     }
 }
 
-
 /*criando array para armazenar os valores inseridos pelo usuário no titulo da tarefa e na descrição também,*/
 
 var topicosInseridosTitulo = Array()
@@ -154,8 +153,6 @@ function saveTask() {
     console.log(arrayTask)
 }
 
-
-
 //limpando array dos items na lista, para não repeti-los em outras tarefas 
 function limparArrayList() {
 
@@ -242,13 +239,14 @@ function criarCardTask() {
 }
 
 
-
 function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTarefa, identificadorTarefaExpandida) {
     //display none nos cards encolhidos, para aparecer somente os cards expandidos
     document.getElementById("containerCards").className = "d-none"
 
     var cardExpandido = document.getElementById("cards-expanded")
     cardExpandido.className = "classe-open-task"
+
+    /*se o elemento já existir, não criar novamente, só abrir o existente*/
 
     if (!document.getElementById("task-expanded" + identificadorTarefaExpandida)) {
         var divTituloAndProgress = document.createElement("div")
@@ -267,8 +265,25 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
 
             var divTopicName = document.createElement("div")
             divTopicName.className = "classe-topic-name d-flex"
-            divTopicName.innerHTML += "<span>" + topicoTarefa[index] + "</span><button class='btn-conclude-topic'>Conclude</button>"
+                //divTopicName.innerHTML += "<span>" + +"</span><button id='" + +"'class='btn-conclude-topic' onclick=''>Conclude</button>"
+
+            var tituloSpan = document.createElement("span")
+            tituloSpan.innerHTML = topicoTarefa[index]
+
+            divTopicName.appendChild(tituloSpan)
+
+            var btn_conclude_topic = document.createElement("button")
+            btn_conclude_topic.id = "btn_" + divTopicos.id
+            btn_conclude_topic.className = "btn-conclude-topic"
+            btn_conclude_topic.innerHTML = "Conclude"
+            btn_conclude_topic.addEventListener("click", function() {
+                taskProgressCalculation(topicoTarefa, divTopicos.id)
+            })
+
+            divTopicName.appendChild(btn_conclude_topic)
+
             divTopicos.appendChild(divTopicName)
+
 
             var descriptionTopic = document.createElement("p")
             descriptionTopic.className = "paragraph-description"
@@ -276,6 +291,7 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
             divTopicos.appendChild(descriptionTopic)
 
             cardExpandido.appendChild(divTopicos)
+
         }
 
     } else {
@@ -310,4 +326,12 @@ function fecharCardsExpandidos(titulo, quantidadeTopicos, identify) {
     }
     document.getElementById("cards-expanded").className = "d-none"
     document.getElementById("containerCards").className = "d-flex"
+}
+
+//calcular progresso da tarefa
+function taskProgressCalculation(qtd_topicos_total, topico_concluido) {
+
+    const tamanhoArray = qtd_topicos_total.length
+    console.log(tamanhoArray)
+
 }
