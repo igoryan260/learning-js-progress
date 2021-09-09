@@ -265,7 +265,7 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
 
             var divTopicName = document.createElement("div")
             divTopicName.className = "classe-topic-name d-flex"
-                //divTopicName.innerHTML += "<span>" + +"</span><button id='" + +"'class='btn-conclude-topic' onclick=''>Conclude</button>"
+                //divTopicName.innerHTML += "<span>" + topicoTarefa[index] + "</span><button id='btn_" + divTopicos.id + "'class='btn-conclude-topic' onclick=' taskProgressCalculation(topicoTarefa, identificadorLocal , btnId )'>Conclude</button>"
 
             var tituloSpan = document.createElement("span")
             tituloSpan.innerHTML = topicoTarefa[index]
@@ -276,10 +276,14 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
             btn_conclude_topic.id = "btn_" + divTopicos.id
             btn_conclude_topic.className = "btn-conclude-topic"
             btn_conclude_topic.innerHTML = "Conclude"
-            btn_conclude_topic.addEventListener("click", function() {
-                taskProgressCalculation(topicoTarefa, divTopicos.id)
-            })
+            let chamarTaskProgress = function() {
 
+                var nome_tarefa_concluida = tituloTarefa + "_topicos_" + index
+                var id_button = "btn_" + tituloTarefa + "_topicos_" + index
+                taskProgressCalculation(topicoTarefa, nome_tarefa_concluida, id_button)
+            }
+            btn_conclude_topic.onclick = chamarTaskProgress
+                //btn_conclude_topic.onclick = taskProgressCalculation(topicoTarefa, divTopicos.id, btn_conclude_topic.id)
             divTopicName.appendChild(btn_conclude_topic)
 
             divTopicos.appendChild(divTopicName)
@@ -291,15 +295,14 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
             divTopicos.appendChild(descriptionTopic)
 
             cardExpandido.appendChild(divTopicos)
-
         }
-
     } else {
         document.getElementById("task-expanded" + identificadorTarefaExpandida).className = "title-open-task d-flex"
         for (let index = 0; index < topicoTarefa.length; index++) {
             document.getElementById(tituloTarefa + "_topicos_" + index).className = ""
         }
     }
+
 
     //criando button para fechar card-expandido
     var btn_close_card = document.createElement("button")
@@ -329,9 +332,19 @@ function fecharCardsExpandidos(titulo, quantidadeTopicos, identify) {
 }
 
 //calcular progresso da tarefa
-function taskProgressCalculation(qtd_topicos_total, topico_concluido) {
+function taskProgressCalculation(qtd_topicos_total, topico_concluido, btn_clicked) {
 
+    /* Vamos utilizar uma lógica pra conseguir recuperar o id do button que foi clicado, com isso vamos descobrir o tamanho da string e pegar somente 
+    o   'id' deste tópico concluido */
+    let idButton = btn_clicked.lastIndexOf("_")
+
+    console.log(qtd_topicos_total, topico_concluido, btn_clicked)
+
+    let topicoConcluido = btn_clicked.substring((idButton + 1), (idButton + 4))
+
+    console.log(btn_clicked, idButton, topicoConcluido)
     const tamanhoArray = qtd_topicos_total.length
-    console.log(tamanhoArray)
+        //debug
+        //console.log(tamanhoArray)
 
 }
