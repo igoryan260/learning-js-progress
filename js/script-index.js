@@ -277,10 +277,12 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
             btn_conclude_topic.className = "btn-conclude-topic"
             btn_conclude_topic.innerHTML = "Conclude"
             let chamarTaskProgress = function() {
-
+                alert("Devo aparecer uma vez")
                 var nome_tarefa_concluida = tituloTarefa + "_topicos_" + index
                 var id_button = "btn_" + tituloTarefa + "_topicos_" + index
                 taskProgressCalculation(topicoTarefa, nome_tarefa_concluida, id_button)
+                    //desabilitar cada button depois do clique
+                document.getElementById(id_button).disabled = true
             }
             btn_conclude_topic.onclick = chamarTaskProgress
                 //btn_conclude_topic.onclick = taskProgressCalculation(topicoTarefa, divTopicos.id, btn_conclude_topic.id)
@@ -333,6 +335,13 @@ function fecharCardsExpandidos(titulo, quantidadeTopicos, identify) {
 
 //calcular progresso da tarefa
 function taskProgressCalculation(qtd_topicos_total, topico_concluido, btn_clicked) {
+
+
+    //colocar button disable no btn da tarefa concluida
+    document.getElementById(btn_clicked).className = "btn-disable"
+
+
+    console.log(btn_clicked)
 
     /* Vamos utilizar uma lógica pra conseguir recuperar o id do button que foi clicado, com isso vamos descobrir o tamanho da string e pegar somente 
     o   'id' deste tópico concluido */

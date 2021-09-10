@@ -4,6 +4,7 @@
          :root {
             --cor-azul-medio: #44B0D4;
             --cor-cinza-claro: #c9c9c9;
+            --cor-cinza-escuro: #7a7a7a;
             --cor-verde-claro: #4EF594;
             --cor-vermelho: #FF0000;
             --cor-verde-marinho: #57EBE8;
@@ -297,6 +298,12 @@
             background: var(--cor-verde-claro);
         }
         
+        div.classe-topic-concluido {
+            padding: 1rem 3rem;
+            justify-content: space-between;
+            background: var(--cor-cinza-claro)
+        }
+        
         .classe-topic-name span {
             font-weight: normal;
             font-size: 24px;
@@ -324,4 +331,9 @@
         
         #closeCardsExpanded {
             margin: 1rem;
+        }
+        
+        button.btn-disable {
+            background-color: var(--cor-cinza-claro);
+            color: var(--cor-cinza-escuro);
         }
