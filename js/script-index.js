@@ -121,6 +121,7 @@ function saveTask() {
         //estes arrays abaixo foram criados dentro da function para que o valor deles não sejam apagados com a 'function limparArrayList'
     var tituloTopico = Array()
     var descricaoTopico = Array()
+    let arrayTopicosConcluidos = Array()
     var tarefaConcluida = false
 
     for (let index = 0; index < topicosInseridosTitulo.length; index++) {
@@ -128,7 +129,7 @@ function saveTask() {
         descricaoTopico.push(topicosInseridosDescricao[index])
     }
 
-    arrayTask.push(Array(tarefaConcluida, tituloTarefa, tituloTopico, descricaoTopico))
+    arrayTask.push(Array(tarefaConcluida, tituloTarefa, tituloTopico, descricaoTopico, arrayTopicosConcluidos))
 
     //incrementando a variavel que adicionará um identificador no arrayTask
     itemTarefa++
@@ -192,7 +193,7 @@ function criarCardTask() {
     //criando elementos dentro dos cards 
     var divTitleTask = document.createElement("div")
     divTitleTask.className = "title-card-task d-flex"
-    divTitleTask.innerHTML = "<h3>" + arrayTask[indiceTarefa][1] + "</h3><span>30%</span>"
+    divTitleTask.innerHTML = "<h3>" + arrayTask[indiceTarefa][1] + "</h3><span id='span_" + cardObject.id + "'>0%</span>"
 
     document.getElementById("card" + indiceTarefa).appendChild(divTitleTask)
 
@@ -227,7 +228,7 @@ function criarCardTask() {
 
         identificadorTarefaExpandida = indiceTarefa
 
-        abrirTarefa(dadosTarefa[0][0], dadosTarefa[0][1], dadosTarefa[0][2], dadosTarefa[0][3], identificadorTarefaExpandida)
+        abrirTarefa(dadosTarefa[0][0], dadosTarefa[0][1], dadosTarefa[0][2], dadosTarefa[0][3], identificadorTarefaExpandida, dadosTarefa[0][4], cardObject.id)
             /*
                 Neste código acima, o indice 0 sempre será zero, porque se trata de um novo array, e cada clique em um card criara ou sobreescreverá o array com apenas um índice
                 isso significa que terá sempre um único indice no array. Quanto aos índices em seguida, '1' significa que é o título, '2' significa os titulos dos tópicos
@@ -239,7 +240,7 @@ function criarCardTask() {
 }
 
 
-function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTarefa, identificadorTarefaExpandida) {
+function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTarefa, identificadorTarefaExpandida, qtd_topicos_concluidos, card_atualizar) {
     //display none nos cards encolhidos, para aparecer somente os cards expandidos
     document.getElementById("containerCards").className = "d-none"
 
@@ -276,13 +277,18 @@ function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTaref
             btn_conclude_topic.id = "btn_" + divTopicos.id
             btn_conclude_topic.className = "btn-conclude-topic"
             btn_conclude_topic.innerHTML = "Conclude"
+
+            //criaremos um array que receberá a quantidade de topicos concluidos
+
+
             let chamarTaskProgress = function() {
-                alert("Devo aparecer uma vez")
-                var nome_tarefa_concluida = tituloTarefa + "_topicos_" + index
+                var nome_topico_concluido = tituloTarefa + "_topicos_" + index
                 var id_button = "btn_" + tituloTarefa + "_topicos_" + index
-                taskProgressCalculation(topicoTarefa, nome_tarefa_concluida, id_button)
+                taskProgressCalculation(topicoTarefa, nome_topico_concluido, id_button, qtd_topicos_concluidos, card_atualizar)
                     //desabilitar cada button depois do clique
                 document.getElementById(id_button).disabled = true
+
+
             }
             btn_conclude_topic.onclick = chamarTaskProgress
                 //btn_conclude_topic.onclick = taskProgressCalculation(topicoTarefa, divTopicos.id, btn_conclude_topic.id)
@@ -333,27 +339,30 @@ function fecharCardsExpandidos(titulo, quantidadeTopicos, identify) {
     document.getElementById("containerCards").className = "d-flex"
 }
 
-//calcular progresso da tarefa
-function taskProgressCalculation(qtd_topicos_total, topico_concluido, btn_clicked) {
 
+
+//calcular progresso da tarefa
+function taskProgressCalculation(qtd_topicos_total, topico_concluido, btn_clicked, arrayTopicosConcluidos, card_tarefa) {
+
+    arrayTopicosConcluidos.push(topico_concluido)
 
     //colocar button disable no btn da tarefa concluida
     document.getElementById(btn_clicked).className = "btn-disable"
 
+    /* 
+    Vamos utilizar uma lógica pra conseguir recuperar o id do button que foi clicado, com isso vamos descobrir o tamanho da string e pegar somente 
+    o   'id' deste tópico concluido 
+    */
 
-    console.log(btn_clicked)
-
-    /* Vamos utilizar uma lógica pra conseguir recuperar o id do button que foi clicado, com isso vamos descobrir o tamanho da string e pegar somente 
-    o   'id' deste tópico concluido */
     let idButton = btn_clicked.lastIndexOf("_")
 
-    console.log(qtd_topicos_total, topico_concluido, btn_clicked)
 
-    let topicoConcluido = btn_clicked.substring((idButton + 1), (idButton + 4))
+    let topicoConcluido = parseInt(btn_clicked.substring((idButton + 1), (idButton + 4)))
 
-    console.log(btn_clicked, idButton, topicoConcluido)
-    const tamanhoArray = qtd_topicos_total.length
-        //debug
-        //console.log(tamanhoArray)
+    const tamanhoArray = (qtd_topicos_total.length)
+        //vamos atualizar o percentual de conclusão 
+    let percentualConclusao = (100 * arrayTopicosConcluidos.length) / tamanhoArray
+
+    document.getElementById("span_" + card_tarefa).innerHTML = Math.round(percentualConclusao) + "%"
 
 }
