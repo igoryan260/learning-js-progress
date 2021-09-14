@@ -24,14 +24,14 @@
 
     <div id="content-principal">
         <!-- Este parágrafo abaixo irá desaparecer caso uma tarefa for adicionada-->
-        <p id="p-warning-no-task" class="d-none">
+        <p id="p-warning-no-task" class="">
             Você ainda não<br /> possui nenhuma tarefa!
         </p>
 
         <!-- os códigos abaixo estão sendo ralacionados à janela de inclusão de tarefas-->
         <!-- **************************************************************-->
         <div id="window-new-task" class="d-none">
-            <input type="text" id="title-task" placeholder="Title">
+            <input type="text" id="title-task" class="titulo-nao-existente" placeholder="Title" onkeyup="validacaoTituloInserido()">
             <div id="content-windows-task" class="d-flex">
                 <div id="task">
                     <form>

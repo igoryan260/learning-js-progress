@@ -93,7 +93,7 @@
             transform: rotate(45deg);
         }
         
-        #window-new-task input#title-task {
+        #window-new-task .titulo-nao-existente {
             font-weight: 600;
             font-size: 37px;
             color: var(--cor-cinza-claro);
@@ -102,6 +102,19 @@
             max-width: 60%;
             margin-bottom: 4rem;
             border: none;
+            outline: none;
+        }
+        
+        #window-new-task .classe-titulo-existente {
+            font-weight: 600;
+            font-size: 37px;
+            outline: none;
+            padding-left: 3rem;
+            width: auto;
+            max-width: 60%;
+            margin-bottom: 4rem;
+            color: var(--cor-vermelho);
+            border: solid 1px var(--cor-vermelho);
         }
         
         #window-new-task div#task {

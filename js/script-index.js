@@ -16,12 +16,20 @@ function abrirJanelaAddTask() {
         document.getElementById("p-warning-no-task").className = "d-none"
         document.getElementById("window-new-task").className = ""
 
+        //display none dos cards, caso existam 
+        if (document.getElementById("containerCards")) {
+            document.getElementById("containerCards").className = "d-none"
+        }
+
     } else if (btn_add_delete_task === "delete-task") {
 
         document.getElementById("btn-add-or-delete-task").className = "add-task"
         document.getElementById("image-add-or-delete-task").src = "./image/plus.png"
         document.getElementById("window-new-task").className = "d-none"
-
+            //reaparecer cards 
+        if (document.getElementById("containerCards")) {
+            document.getElementById("containerCards").className = "d-flex"
+        }
     }
 }
 
@@ -148,10 +156,33 @@ function saveTask() {
 
     //tirar aviso de tarefa inexistente
     document.getElementById("p-warning-no-task").className = "d-none"
-        //fechar janela onde adiciona tarefas
+        //reaparecer cards 
+    if (document.getElementById("containerCards")) {
+        document.getElementById("containerCards").className = "d-flex"
+    }
+    //fechar janela onde adiciona tarefas
     abrirJanelaAddTask()
 
     console.log(arrayTask)
+}
+
+//verificando se nome da tarefa ja existente
+function validacaoTituloInserido() {
+
+
+    arrayTask.forEach(function(value, index, array) {
+        let stringInserido = document.getElementById("title-task")
+        console.log(value[1])
+        if (stringInserido.value === value[1]) {
+            alert("Este título de tarefa já existe. Tente dar um espaço ou retirá-lo!")
+            stringInserido.className = "classe-titulo-existente"
+        } else {
+            stringInserido.className = "titulo-nao-existente"
+        }
+
+
+    });
+
 }
 
 //limpando array dos items na lista, para não repeti-los em outras tarefas 
@@ -338,8 +369,6 @@ function fecharCardsExpandidos(titulo, quantidadeTopicos, identify) {
     document.getElementById("cards-expanded").className = "d-none"
     document.getElementById("containerCards").className = "d-flex"
 }
-
-
 
 //calcular progresso da tarefa
 function taskProgressCalculation(qtd_topicos_total, topico_concluido, btn_clicked, arrayTopicosConcluidos, card_tarefa) {
