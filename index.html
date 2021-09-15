@@ -31,7 +31,11 @@
         <!-- os códigos abaixo estão sendo ralacionados à janela de inclusão de tarefas-->
         <!-- **************************************************************-->
         <div id="window-new-task" class="d-none">
-            <input type="text" id="title-task" class="titulo-nao-existente" placeholder="Title" onkeyup="validacaoTituloInserido()">
+
+            <input type="text" id="title-task" class="titulo-nao-existente" placeholder="Title" onblur="verificaSeErroCorrigido()" onkeyup="validacaoTituloInserido()">
+            <p id="aviso-nome-tarefa-existe" class="d-none">
+                <span>Este nome de tarefa já existe. Tente outro!</span>
+            </p>
             <div id="content-windows-task" class="d-flex">
                 <div id="task">
                     <form>

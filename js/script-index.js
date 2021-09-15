@@ -125,6 +125,7 @@ var itemTarefa = 0
 
 function saveTask() {
 
+
     var tituloTarefa = document.getElementById("title-task").value
         //estes arrays abaixo foram criados dentro da function para que o valor deles não sejam apagados com a 'function limparArrayList'
     var tituloTopico = Array()
@@ -168,22 +169,23 @@ function saveTask() {
 
 //verificando se nome da tarefa ja existente
 function validacaoTituloInserido() {
-
-
     arrayTask.forEach(function(value, index, array) {
         let stringInserido = document.getElementById("title-task")
         console.log(value[1])
         if (stringInserido.value === value[1]) {
-            alert("Este título de tarefa já existe. Tente dar um espaço ou retirá-lo!")
+            document.getElementById("aviso-nome-tarefa-existe").className = ""
             stringInserido.className = "classe-titulo-existente"
+            document.getElementById("btn-save-task").disabled = true
         } else {
+            document.getElementById("aviso-nome-tarefa-existe").className = "d-none"
             stringInserido.className = "titulo-nao-existente"
+            document.getElementById("btn-save-task").disabled = false
         }
 
-
     });
-
 }
+
+
 
 //limpando array dos items na lista, para não repeti-los em outras tarefas 
 function limparArrayList() {

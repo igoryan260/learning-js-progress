@@ -100,7 +100,7 @@
             padding-left: 3rem;
             width: auto;
             max-width: 60%;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
             border: none;
             outline: none;
         }
@@ -112,7 +112,7 @@
             padding-left: 3rem;
             width: auto;
             max-width: 60%;
-            margin-bottom: 4rem;
+            margin-bottom: 1rem;
             color: var(--cor-vermelho);
             border: solid 1px var(--cor-vermelho);
         }
@@ -349,4 +349,14 @@
         button.btn-disable {
             background-color: var(--cor-cinza-claro);
             color: var(--cor-cinza-escuro);
+        }
+        /*Aviso de tarefa já existente*/
+        
+        #aviso-nome-tarefa-existe {
+            margin-bottom: 3rem;
+        }
+        
+        #aviso-nome-tarefa-existe span {
+            color: var(--cor-vermelho);
+            font-style: italic;
         }
