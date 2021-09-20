@@ -43,44 +43,48 @@ var passandoPeloArray = 0
 
 
 function inserindoTopicosArray() {
-    topicosInseridosTitulo.push(document.getElementById("title-topic").value)
-        // console.log(topicosInseridosTitulo)
+    if (document.getElementById("title-task").value == "" || document.getElementById("title-topic").value == "" || document.getElementById("description-task").value == "") {
+        alert("Preencha todos os campos")
+    } else {
+        topicosInseridosTitulo.push(document.getElementById("title-topic").value)
+            // console.log(topicosInseridosTitulo)
 
-    /*chamando a funcao adicionarTituloNaLista*/
-    adicionarTituloNaLista(passandoPeloArray)
+        /*chamando a funcao adicionarTituloNaLista*/
+        adicionarTituloNaLista(passandoPeloArray)
 
-    /*adicionar os titulos que estão armazenados no array, e inserir na lista não ordenada na parte lateral direita azul*/
-    function adicionarTituloNaLista(indiceArray) {
+        /*adicionar os titulos que estão armazenados no array, e inserir na lista não ordenada na parte lateral direita azul*/
+        function adicionarTituloNaLista(indiceArray) {
 
-        var itemArrayTitulo = document.createElement("li")
-        itemArrayTitulo.style = "cursor: pointer;"
-        itemArrayTitulo.id = "titulo-" + indiceArray + ""
+            var itemArrayTitulo = document.createElement("li")
+            itemArrayTitulo.style = "cursor: pointer;"
+            itemArrayTitulo.id = "titulo-" + indiceArray + ""
 
-        itemArrayTitulo.innerHTML = topicosInseridosTitulo[indiceArray]
+            itemArrayTitulo.innerHTML = topicosInseridosTitulo[indiceArray]
 
-        document.getElementById("list-added-tasks").appendChild(itemArrayTitulo)
+            document.getElementById("list-added-tasks").appendChild(itemArrayTitulo)
 
-        /*quando o objeto da lista for clicado, irá executar a função que abrirá a funcao abrirExpendedTopic*/
-        itemArrayTitulo.addEventListener("click", function() {
-            abrirExpendedTopic(indiceArray)
-        })
+            /*quando o objeto da lista for clicado, irá executar a função que abrirá a funcao abrirExpendedTopic*/
+            itemArrayTitulo.addEventListener("click", function() {
+                abrirExpendedTopic(indiceArray)
+            })
+        }
+        passandoPeloArray++
+        console.log("passando no array: " + passandoPeloArray)
+
+        /***************************************************************************************** ======================================================================================*/
+
+
+        /*a função abaixo irá repetir o mesmo processo, mas irá adicionar a descrição no ArrayDescricao*/
+        /* mas não irá colocar na divisão azul */
+        topicosInseridosDescricao.push(document.getElementById("description-task").value)
+
+        /*debug*/
+        //console.log(topicosInseridosDescricao)
+
+        /*limpar os valores preenchidos nos inputs*/
+        document.getElementById("title-topic").value = ""
+        document.getElementById("description-task").value = ""
     }
-    passandoPeloArray++
-    console.log("passando no array: " + passandoPeloArray)
-
-    /***************************************************************************************** ======================================================================================*/
-
-
-    /*a função abaixo irá repetir o mesmo processo, mas irá adicionar a descrição no ArrayDescricao*/
-    /* mas não irá colocar na divisão azul */
-    topicosInseridosDescricao.push(document.getElementById("description-task").value)
-
-    /*debug*/
-    //console.log(topicosInseridosDescricao)
-
-    /*limpar os valores preenchidos nos inputs*/
-    document.getElementById("title-topic").value = ""
-    document.getElementById("description-task").value = ""
 }
 
 
@@ -125,67 +129,49 @@ var itemTarefa = 0
 
 function saveTask() {
 
+    if (topicosInseridosDescricao == "") {
+        alert("Primeiro adicione topicos na sua tarefa")
+    } else {
+        var tituloTarefa = document.getElementById("title-task").value
+            //estes arrays abaixo foram criados dentro da function para que o valor deles não sejam apagados com a 'function limparArrayList'
+        var tituloTopico = Array()
+        var descricaoTopico = Array()
+        let arrayTopicosConcluidos = Array()
+        var tarefaConcluida = false
 
-    var tituloTarefa = document.getElementById("title-task").value
-        //estes arrays abaixo foram criados dentro da function para que o valor deles não sejam apagados com a 'function limparArrayList'
-    var tituloTopico = Array()
-    var descricaoTopico = Array()
-    let arrayTopicosConcluidos = Array()
-    var tarefaConcluida = false
-
-    for (let index = 0; index < topicosInseridosTitulo.length; index++) {
-        tituloTopico.push(topicosInseridosTitulo[index])
-        descricaoTopico.push(topicosInseridosDescricao[index])
-    }
-
-    arrayTask.push(Array(tarefaConcluida, tituloTarefa, tituloTopico, descricaoTopico, arrayTopicosConcluidos))
-
-    //incrementando a variavel que adicionará um identificador no arrayTask
-    itemTarefa++
-
-
-    /*para cada tarefa salva, é preciso excluir o array de titulos de topicos e descricoes, além de apagar o input 
-    de titulo de tarefa*/
-    document.getElementById("title-task").value = ""
-
-    //apagando os itens da lista lateral direito azul existente
-    document.getElementById("list-added-tasks").innerHTML = ""
-    limparArrayList()
-
-    //criando card na tela inicial
-    criarCardTask()
-
-    //tirar aviso de tarefa inexistente
-    document.getElementById("p-warning-no-task").className = "d-none"
-        //reaparecer cards 
-    if (document.getElementById("containerCards")) {
-        document.getElementById("containerCards").className = "d-flex"
-    }
-    //fechar janela onde adiciona tarefas
-    abrirJanelaAddTask()
-
-    console.log(arrayTask)
-}
-
-//verificando se nome da tarefa ja existente
-function validacaoTituloInserido() {
-    arrayTask.forEach(function(value, index, array) {
-        let stringInserido = document.getElementById("title-task")
-        console.log(value[1])
-        if (stringInserido.value === value[1]) {
-            document.getElementById("aviso-nome-tarefa-existe").className = ""
-            stringInserido.className = "classe-titulo-existente"
-            document.getElementById("btn-save-task").disabled = true
-        } else {
-            document.getElementById("aviso-nome-tarefa-existe").className = "d-none"
-            stringInserido.className = "titulo-nao-existente"
-            document.getElementById("btn-save-task").disabled = false
+        for (let index = 0; index < topicosInseridosTitulo.length; index++) {
+            tituloTopico.push(topicosInseridosTitulo[index])
+            descricaoTopico.push(topicosInseridosDescricao[index])
         }
 
-    });
+        arrayTask.push(Array(tarefaConcluida, tituloTarefa, tituloTopico, descricaoTopico, arrayTopicosConcluidos))
+
+        //incrementando a variavel que adicionará um identificador no arrayTask
+        itemTarefa++
+
+
+        /*para cada tarefa salva, é preciso excluir o array de titulos de topicos e descricoes, além de apagar o input 
+        de titulo de tarefa*/
+        document.getElementById("title-task").value = ""
+
+        //apagando os itens da lista lateral direito azul existente
+        document.getElementById("list-added-tasks").innerHTML = ""
+        limparArrayList()
+
+        //criando card na tela inicial
+        criarCardTask()
+
+        //tirar aviso de tarefa inexistente
+        document.getElementById("p-warning-no-task").className = "d-none"
+            //reaparecer cards 
+        if (document.getElementById("containerCards")) {
+            document.getElementById("containerCards").className = "d-flex"
+        }
+        //fechar janela onde adiciona tarefas
+        abrirJanelaAddTask()
+    }
+
 }
-
-
 
 //limpando array dos items na lista, para não repeti-los em outras tarefas 
 function limparArrayList() {
@@ -268,10 +254,34 @@ function criarCardTask() {
                 e '3' siginifica a descrição de cada tópico
             */
     })
-
-
 }
 
+
+//verificando se nome da tarefa ja existente
+function validacaoTituloInserido() {
+
+    let get_element = document.getElementById("title-task")
+    let valor_inserido = get_element.value
+
+    const getTitulosArray = Array()
+
+    for (let index = 0; index < arrayTask.length; index++) {
+        getTitulosArray.push(arrayTask[index][1])
+    }
+
+    let valorEncontrado = getTitulosArray.indexOf(valor_inserido)
+
+    if (valorEncontrado != -1) {
+        document.getElementById("aviso-nome-tarefa-existe").className = ""
+        document.getElementById("btn-save-task").disabled = true
+        document.getElementById("title-task").className = "classe-titulo-existente"
+    } else {
+        document.getElementById("aviso-nome-tarefa-existe").className = "d-none"
+        document.getElementById("btn-save-task").disabled = false
+        document.getElementById("title-task").className = "titulo-nao-existente"
+    }
+
+}
 
 function abrirTarefa(conclusaoTarefa, tituloTarefa, topicoTarefa, descricaoTarefa, identificadorTarefaExpandida, qtd_topicos_concluidos, card_atualizar) {
     //display none nos cards encolhidos, para aparecer somente os cards expandidos

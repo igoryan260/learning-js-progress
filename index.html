@@ -32,7 +32,9 @@
         <!-- **************************************************************-->
         <div id="window-new-task" class="d-none">
 
-            <input type="text" id="title-task" class="titulo-nao-existente" placeholder="Title" onblur="verificaSeErroCorrigido()" onkeyup="validacaoTituloInserido()">
+            <input type="text" id="title-task" class="titulo-nao-existente" placeholder="Title" onkeyup="validacaoTituloInserido()">
+
+            <!-- Este paragrafp só aparecerá se  existir tarefa com o nome já existente-->
             <p id="aviso-nome-tarefa-existe" class="d-none">
                 <span>Este nome de tarefa já existe. Tente outro!</span>
             </p>
