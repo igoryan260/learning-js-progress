@@ -406,4 +406,12 @@ function taskProgressCalculation(qtd_topicos_total, topico_concluido, btn_clicke
 
     document.getElementById("span_" + card_tarefa).innerHTML = Math.round(percentualConclusao) + "%"
 
+    //caso todos os topicos da tarefa estejam concluidos, ele deve aplicar uma cor ao span que se encontra no titulo da tarefa Expandida
+
+    if (arrayTopicosConcluidos.length == tamanhoArray) {
+        let indicador_conclusao = document.getElementById("task-expanded" + card_tarefa.substring(4, (5 + 4)) + "")
+
+        indicador_conclusao.className = "title-open-task d-flex class-conclude"
+
+    }
 }

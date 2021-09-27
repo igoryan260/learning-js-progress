@@ -248,7 +248,7 @@
             background: var(--cor-verde-marinho);
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
-            margin: 5rem 2rem;
+            margin: 5rem auto;
         }
         
         .title-card-task {
@@ -305,6 +305,14 @@
             align-items: center;
         }
         
+        .title-open-task span {
+            color: var(--cor-cinza-claro);
+        }
+        
+        .class-conclude span {
+            color: var(--cor-azul-escuro);
+        }
+        
         .classe-topic-name {
             padding: 1rem 3rem;
             justify-content: space-between;
@@ -359,4 +367,11 @@
         #aviso-nome-tarefa-existe span {
             color: var(--cor-vermelho);
             font-style: italic;
+        }
+        /*aplicando flex wrap no container cards*/
+        
+        #containerCards {
+            margin: 0 auto;
+            max-width: 98vw;
+            flex-wrap: wrap;
         }
